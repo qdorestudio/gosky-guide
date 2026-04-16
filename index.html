@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GoSky AI 自動回覆懶人包｜@a.b_wei</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+background: #FAF6F0;
+font-family: -apple-system, ‘PingFang TC’, ‘Microsoft JhengHei’, sans-serif;
+color: #2C1F14;
+min-height: 100vh;
+}
+
+/* HERO */
+.hero {
+background: #3D2B1F;
+padding: 52px 24px 44px;
+text-align: center;
+position: relative;
+overflow: hidden;
+}
+
+.hero::before {
+content: ‘’;
+position: absolute;
+top: -60px; left: -60px;
+width: 240px; height: 240px;
+border-radius: 50%;
+background: #5A3C28;
+}
+
+.hero::after {
+content: ‘’;
+position: absolute;
+bottom: -40px; right: -40px;
+width: 160px; height: 160px;
+border-radius: 50%;
+background: #4A3020;
+}
+
+.hero-tag {
+display: inline-block;
+font-size: 9px;
+letter-spacing: 3px;
+color: #C4A882;
+text-transform: uppercase;
+border: 1px solid rgba(196,168,130,0.3);
+padding: 4px 12px;
+border-radius: 20px;
+margin-bottom: 20px;
+position: relative;
+z-index: 1;
+}
+
+.hero h1 {
+font-size: 28px;
+font-weight: 900;
+color: #F5EDE0;
+line-height: 1.2;
+margin-bottom: 10px;
+position: relative;
+z-index: 1;
+}
+
+.hero h1 em {
+font-style: normal;
+color: #C4A882;
+}
+
+.hero-sub {
+font-size: 11px;
+color: rgba(255,255,255,0.4);
+letter-spacing: 1px;
+position: relative;
+z-index: 1;
+}
+
+/* WRAP */
+.wrap {
+max-width: 600px;
+margin: 0 auto;
+padding: 0 20px 60px;
+}
+
+/* SECTION */
+.section {
+margin-top: 32px;
+animation: fadeUp 0.6s ease both;
+}
+
+.section-label {
+display: flex;
+align-items: center;
+gap: 10px;
+margin-bottom: 14px;
+}
+
+.section-label-text {
+font-size: 9px;
+letter-spacing: 3px;
+color: #9C7A5A;
+text-transform: uppercase;
+white-space: nowrap;
+}
+
+.section-label-line {
+flex: 1;
+height: 1px;
+background: #E8D8C8;
+}
+
+.section h2 {
+font-size: 18px;
+font-weight: 800;
+color: #2C1F14;
+margin-bottom: 14px;
+line-height: 1.3;
+}
+
+.section h2 em {
+font-style: normal;
+color: #8B5E3C;
+}
+
+/* FEATURE LIST */
+.feat-list {
+display: flex;
+flex-direction: column;
+gap: 10px;
+}
+
+.feat-item {
+display: flex;
+align-items: flex-start;
+gap: 12px;
+background: #fff;
+border: 1px solid #EDE0CF;
+border-radius: 10px;
+padding: 12px 14px;
+}
+
+.feat-emoji {
+font-size: 18px;
+flex-shrink: 0;
+margin-top: 1px;
+}
+
+.feat-content {}
+.feat-title { font-size: 12px; font-weight: 700; color: #2C1F14; margin-bottom: 2px; }
+.feat-desc { font-size: 11px; color: #7A6050; line-height: 1.6; }
+
+/* PLAN CARDS */
+.plan-cards {
+display: flex;
+flex-direction: column;
+gap: 12px;
+}
+
+.plan-card {
+border-radius: 12px;
+padding: 18px 20px;
+position: relative;
+overflow: hidden;
+}
+
+.plan-card.free {
+background: #fff;
+border: 1.5px solid #EDE0CF;
+}
+
+.plan-card.paid {
+background: #3D2B1F;
+border: none;
+}
+
+.plan-badge {
+display: inline-block;
+font-size: 8px;
+letter-spacing: 2px;
+text-transform: uppercase;
+padding: 3px 9px;
+border-radius: 20px;
+margin-bottom: 10px;
+}
+
+.plan-card.free .plan-badge { background: #F0E4D4; color: #8B5E3C; }
+.plan-card.paid .plan-badge { background: rgba(196,168,130,0.2); color: #C4A882; }
+
+.plan-title {
+font-size: 16px;
+font-weight: 800;
+margin-bottom: 6px;
+}
+
+.plan-card.free .plan-title { color: #2C1F14; }
+.plan-card.paid .plan-title { color: #F5EDE0; }
+
+.plan-desc {
+font-size: 11px;
+line-height: 1.75;
+}
+
+.plan-card.free .plan-desc { color: #7A6050; }
+.plan-card.paid .plan-desc { color: rgba(255,255,255,0.55); }
+
+.plan-tip {
+margin-top: 10px;
+font-size: 11px;
+font-weight: 600;
+}
+
+.plan-card.free .plan-tip { color: #8B5E3C; }
+.plan-card.paid .plan-tip { color: #C4A882; }
+
+.plan-deco {
+position: absolute;
+bottom: -20px; right: -20px;
+width: 80px; height: 80px;
+border-radius: 50%;
+background: rgba(196,168,130,0.07);
+}
+
+/* DISCOUNT BOX */
+.discount-box {
+background: linear-gradient(135deg, #3D2B1F 0%, #5A3C28 100%);
+border-radius: 16px;
+padding: 24px 20px;
+text-align: center;
+position: relative;
+overflow: hidden;
+}
+
+.discount-box::before {
+content: ‘’;
+position: absolute;
+top: -30px; left: -30px;
+width: 120px; height: 120px;
+border-radius: 50%;
+background: rgba(196,168,130,0.06);
+}
+
+.discount-label {
+font-size: 9px;
+letter-spacing: 3px;
+color: rgba(196,168,130,0.6);
+text-transform: uppercase;
+margin-bottom: 10px;
+position: relative;
+z-index: 1;
+}
+
+.discount-code {
+font-size: 32px;
+font-weight: 900;
+color: #C4A882;
+letter-spacing: 4px;
+margin-bottom: 10px;
+position: relative;
+z-index: 1;
+}
+
+.discount-desc {
+font-size: 11px;
+color: rgba(255,255,255,0.5);
+line-height: 1.7;
+margin-bottom: 16px;
+position: relative;
+z-index: 1;
+}
+
+.discount-highlight {
+display: inline-block;
+background: rgba(196,168,130,0.15);
+border: 1px solid rgba(196,168,130,0.3);
+border-radius: 8px;
+padding: 10px 20px;
+font-size: 13px;
+font-weight: 700;
+color: #C4A882;
+position: relative;
+z-index: 1;
+}
+
+/* STEPS */
+.step-list {
+display: flex;
+flex-direction: column;
+gap: 0;
+}
+
+.step-item {
+display: flex;
+gap: 14px;
+position: relative;
+}
+
+.step-item:not(:last-child)::after {
+content: ‘’;
+position: absolute;
+left: 15px;
+top: 32px;
+bottom: 0;
+width: 1px;
+background: #E8D8C8;
+}
+
+.step-num-wrap {
+display: flex;
+flex-direction: column;
+align-items: center;
+flex-shrink: 0;
+padding-bottom: 16px;
+}
+
+.step-num {
+width: 30px; height: 30px;
+border-radius: 50%;
+background: #3D2B1F;
+color: #F5EDE0;
+font-size: 10px;
+font-weight: 700;
+display: flex; align-items: center; justify-content: center;
+}
+
+.step-body { padding-bottom: 20px; padding-top: 4px; }
+.step-title { font-size: 12px; font-weight: 700; color: #2C1F14; margin-bottom: 3px; }
+.step-desc { font-size: 11px; color: #7A6050; line-height: 1.6; }
+
+/* FAQ */
+.faq-list { display: flex; flex-direction: column; gap: 8px; }
+
+.faq-item {
+background: #fff;
+border: 1px solid #EDE0CF;
+border-radius: 10px;
+padding: 14px 16px;
+}
+
+.faq-q { font-size: 12px; font-weight: 700; color: #2C1F14; margin-bottom: 6px; }
+.faq-q::before { content: ’Q ’; color: #8B5E3C; }
+.faq-a { font-size: 11px; color: #7A6050; line-height: 1.65; }
+.faq-a::before { content: ’A  ’; font-weight: 600; color: #9C7A5A; }
+
+/* FOOTER */
+.footer {
+margin-top: 40px;
+text-align: center;
+padding: 24px 20px;
+border-top: 1px solid #EDE0CF;
+}
+
+.footer-name {
+font-size: 14px;
+font-weight: 800;
+color: #3D2B1F;
+margin-bottom: 4px;
+}
+
+.footer-sub {
+font-size: 10px;
+color: #9C7A5A;
+letter-spacing: 1px;
+margin-bottom: 12px;
+}
+
+.footer-tag {
+display: inline-block;
+background: #F0E4D4;
+color: #8B5E3C;
+font-size: 9px;
+letter-spacing: 2px;
+padding: 4px 12px;
+border-radius: 20px;
+}
+
+@keyframes fadeUp {
+from { opacity: 0; transform: translateY(12px); }
+to   { opacity: 1; transform: translateY(0); }
+}
+
+.section:nth-child(1) { animation-delay: 0.05s; }
+.section:nth-child(2) { animation-delay: 0.1s; }
+.section:nth-child(3) { animation-delay: 0.15s; }
+.section:nth-child(4) { animation-delay: 0.2s; }
+.section:nth-child(5) { animation-delay: 0.25s; }
+</style>
+
+</head>
+<body>
+
+<!-- HERO -->
+
+<div class="hero">
+  <div class="hero-tag">GoSky AI 使用指南</div>
+  <h1>自動回覆系統<br><em>完整懶人包</em></h1>
+  <p class="hero-sub">by @a.b_wei · 含專屬折扣碼</p>
+</div>
+
+<div class="wrap">
+
+  <!-- 為什麼推薦 -->
+
+  <div class="section">
+    <div class="section-label">
+      <span class="section-label-text">Why GoSky AI</span>
+      <div class="section-label-line"></div>
+    </div>
+    <h2>為什麼我推薦<em>這套系統？</em></h2>
+    <div class="feat-list">
+      <div class="feat-item">
+        <div class="feat-emoji">🇹🇼</div>
+        <div class="feat-content">
+          <div class="feat-title">全中文介面，不用懂程式</div>
+          <div class="feat-desc">拖拉點擊就能完成設定，完全不需要任何技術背景</div>
+        </div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-emoji">💰</div>
+        <div class="feat-content">
+          <div class="feat-title">價格透明，月費最低不到 $300</div>
+          <div class="feat-desc">用年繳＋我的折扣碼，平均一個月超划算，留言爆掉也不會增加費用</div>
+        </div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-emoji">✅</div>
+        <div class="feat-content">
+          <div class="feat-title">Meta 官方認證合作夥伴</div>
+          <div class="feat-desc">安全合規，不怕被 IG 封號，完全符合 Meta 政策</div>
+        </div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-emoji">🌙</div>
+        <div class="feat-content">
+          <div class="feat-title">24 小時自動運作不下班</div>
+          <div class="feat-desc">睡覺時也在幫你回覆、累積名單、引導私訊，被動收單不是夢</div>
+        </div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-emoji">🆓</div>
+        <div class="feat-content">
+          <div class="feat-title">免費試用 500 則，先體驗再決定</div>
+          <div class="feat-desc">不用先付錢，玩熟系統之後再決定要不要升級，完全無壓力</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 方案建議 -->
+
+  <div class="section">
+    <div class="section-label">
+      <span class="section-label-text">Plan Suggestion</span>
+      <div class="section-label-line"></div>
+    </div>
+    <h2>我的<em>方案建議</em></h2>
+    <div class="plan-cards">
+      <div class="plan-card free">
+        <div class="plan-badge">第一步 · 新手必做</div>
+        <div class="plan-title">🟢 先用免費版熟悉系統</div>
+        <div class="plan-desc">
+          GoSky 提供 500 則免費回覆，不用綁信用卡。<br>
+          先把自動回覆流程設定好，測試看看，確認自己有在用才升級。
+        </div>
+        <div class="plan-tip">→ 建議至少用 1-2 週再決定要不要付費</div>
+      </div>
+      <div class="plan-card paid">
+        <div class="plan-deco"></div>
+        <div class="plan-badge">第二步 · 我自己的選擇</div>
+        <div class="plan-title">🏆 年繳方案＋折扣碼</div>
+        <div class="plan-desc">
+          準備升級的時候，直接選年繳比月繳划算很多。<br>
+          再加上我的專屬折扣碼，享有九折優惠。
+        </div>
+        <div class="plan-tip">✦ 平均一個月不到 $300，CP 值最高！</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 折扣碼 -->
+
+  <div class="section">
+    <div class="section-label">
+      <span class="section-label-text">Exclusive Code</span>
+      <div class="section-label-line"></div>
+    </div>
+    <div class="discount-box">
+      <div class="discount-label">專屬九折折扣碼</div>
+      <div class="discount-code">ABBIE100</div>
+      <div class="discount-desc">
+        結帳時輸入折扣碼即可享有九折優惠<br>
+        選年繳＋折扣碼，平均每月不到 $300
+      </div>
+      <div class="discount-highlight">📋 複製折扣碼：ABBIE100</div>
+    </div>
+  </div>
+
+  <!-- 使用步驟 -->
+
+  <div class="section">
+    <div class="section-label">
+      <span class="section-label-text">How To Start</span>
+      <div class="section-label-line"></div>
+    </div>
+    <h2>5步驟<em>快速上手</em></h2>
+    <div class="step-list">
+      <div class="step-item">
+        <div class="step-num-wrap"><div class="step-num">1</div></div>
+        <div class="step-body">
+          <div class="step-title">前往 GoSky AI 官網註冊帳號</div>
+          <div class="step-desc">goskyai.com，免費註冊，不用綁信用卡</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num-wrap"><div class="step-num">2</div></div>
+        <div class="step-body">
+          <div class="step-title">連結你的 IG 商業帳號</div>
+          <div class="step-desc">需要先把 IG 切換成商業帳號才能使用自動化功能</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num-wrap"><div class="step-num">3</div></div>
+        <div class="step-body">
+          <div class="step-title">設定第一個自動回覆流程</div>
+          <div class="step-desc">選定關鍵字（例：攻略、領取）+ 設定自動私訊內容</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num-wrap"><div class="step-num">4</div></div>
+        <div class="step-body">
+          <div class="step-title">發影片測試有沒有成功觸發</div>
+          <div class="step-desc">留言你設定的關鍵字，確認自動私訊有正確發送</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num-wrap"><div class="step-num">5</div></div>
+        <div class="step-body">
+          <div class="step-title">升級年繳並輸入折扣碼 ABBIE100</div>
+          <div class="step-desc">確認系統適合你之後，升級享九折，開始被動收名單！</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+
+  <div class="section">
+    <div class="section-label">
+      <span class="section-label-text">FAQ</span>
+      <div class="section-label-line"></div>
+    </div>
+    <h2>常見<em>問題解答</em></h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q">需要懂程式嗎？</div>
+        <div class="faq-a">完全不需要！全程點擊拖拉，不用寫任何 code，設定超直覺</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">免費版有什麼限制？</div>
+        <div class="faq-a">免費提供 500 則回覆，足夠讓你測試和熟悉整個系統流程</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">IG 帳號需要是商業帳號嗎？</div>
+        <div class="faq-a">是的，需要先把 IG 切換成商業帳號，Meta 官方規定只開放商業帳號使用自動化功能</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">留言很多，費用會增加嗎？</div>
+        <div class="faq-a">不會！GoSky 的方案費用固定，留言再多也不會額外收費，非常適合爆紅貼文</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">折扣碼怎麼使用？</div>
+        <div class="faq-a">選擇付費方案結帳時，在折扣碼欄位輸入 ABBIE100 即可享有九折優惠</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+
+  <div class="footer">
+    <div class="footer-name">@a.b_wei</div>
+    <div class="footer-sub">有任何問題歡迎私訊我 ⸜♡⸝</div>
+    <div class="footer-tag">折扣碼 ABBIE100 · 九折優惠</div>
+  </div>
+
+</div>
+</body>
+</html>
