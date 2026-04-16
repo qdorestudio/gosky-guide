@@ -494,7 +494,9 @@ to   { opacity: 1; transform: translateY(0); }
         結帳時輸入折扣碼即可享有九折優惠<br>
         選年繳＋折扣碼，平均每月不到 $300
       </div>
-      <div class="discount-highlight">📋 複製折扣碼：ABBIE100</div>
+      <div class="discount-highlight" onclick="copyCode()" id="copyBtn" style="cursor:pointer;">
+        📋 複製折扣碼：ABBIE100
+      </div>
     </div>
   </div>
 
@@ -586,5 +588,33 @@ to   { opacity: 1; transform: translateY(0); }
   </div>
 
 </div>
+<script>
+function copyCode() {
+  var btn = document.getElementById('copyBtn');
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText('ABBIE100').then(function() {
+      btn.textContent = '✓ 已複製！';
+      btn.style.background = 'rgba(100,180,100,0.2)';
+      btn.style.borderColor = 'rgba(100,180,100,0.4)';
+      btn.style.color = '#90C890';
+      setTimeout(function() {
+        btn.textContent = '📋 複製折扣碼：ABBIE100';
+        btn.style.background = '';
+        btn.style.borderColor = '';
+        btn.style.color = '';
+      }, 2000);
+    });
+  } else {
+    var ta = document.createElement('textarea');
+    ta.value = 'ABBIE100';
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    btn.textContent = '✓ 已複製！';
+    setTimeout(function() { btn.textContent = '📋 複製折扣碼：ABBIE100'; }, 2000);
+  }
+}
+</script>
 </body>
 </html>
